@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <title>화천초등학교 특별실 예약시스템</title>
+    <link rel="preconnect" href="https://outlook.office.com">
+    <link rel="dns-prefetch" href="https://outlook.office.com">
+    <link rel="manifest" href="data:application/manifest+json,{
+        'name': '화천초등학교 특별실 예약시스템',
+        'short_name': '화천초 예약',
+        'description': '화천초등학교 특별실 예약시스템',
+        'start_url': '/',
+        'display': 'standalone',
+        'background_color': '#ffffff',
+        'theme_color': '#4169E1',
+        'icons': [{
+            'src': 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQxIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNDE2OUUxO3N0b3Atb3BhY2l0eToxIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFFOTBGRjtzdG9wLW9wYWNpdHk6MSIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjkwIiBmaWxsPSJ1cmwoI2dyYWQxKSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjQiLz48cmVjdCB4PSI2MCIgeT0iNjAiIHdpZHRoPSI4MCIgaGVpZ2h0PSI2MCIgcng9IjgiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz48dGV4dCB4PSIxMDAiIHk9Ijg1IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNDE2OUUxIj7quZDsooXqtpA8L3RleHQ+PHRleHQgeD0iMTAwIiB5PSIxMDUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzQxNjlFMSI+7ZqV7Yq465Ox7YWQ66qo6rO8PC90ZXh0Pjwvc3ZnPg==',
+            'sizes': '200x200',
+            'type': 'image/svg+xml'
+        }]
+    }">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            min-height: 100vh;
+            background: white;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4169E1 0%, #1E90FF 100%);
+            color: white;
+            padding: 30px 20px 12px;
+            text-align: center;
+            position: relative;
+        }
+
+        .app-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 5px;
+            background: linear-gradient(135deg, #4169E1 0%, #1E90FF 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(65, 105, 225, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-100%);
+            animation: shine 3s ease-in-out infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .icon-content {
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .app-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 3px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-subtitle {
+            font-size: 13px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: center;
+            padding-top: clamp(120px, 22vh, 170px);
+            background: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            width: 100%;
+            max-width: 300px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .menu-button {
+            width: 100%;
+            padding: 18px 10px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: white;
+            min-height: 60px;
+        }
+
+        .menu-button.primary {
+            background: linear-gradient(135deg, #4169E1 0%, #1E90FF 100%);
+            box-shadow: 0 8px 25px rgba(65, 105, 225, 0.3);
+        }
+
+        .menu-button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(65, 105, 225, 0.4);
+        }
+
+        .menu-button.secondary {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+        }
+
+        .menu-button.secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(40, 167, 69, 0.4);
+        }
+
+        .menu-button:active {
+            transform: translateY(0);
+            transition: all 0.1s ease;
+        }
+
+        .menu-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .menu-button:hover::before {
+            left: 100%;
+        }
+
+        .footer-logo {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            min-width: 280px;
+            white-space: nowrap;
+        }
+
+        .logo-text {
+            text-align: center;
+        }
+
+        .logo-korean {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 3px;
+        }
+
+        .logo-english {
+            font-size: 11px;
+            color: #7f8c8d;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 480px) {
+            .app-container {
+                max-width: 100vw;
+                min-height: 100vh;
+                border-radius: 0;
+            }
+            
+            .header {
+                padding: 25px 15px 10px;
+            }
+            
+            .main-content {
+                padding: 15px;
+                padding-bottom: 140px;
+            }
+            
+            .app-title {
+                font-size: 20px;
+            }
+            
+            .app-subtitle {
+                font-size: 12px;
+            }
+            
+            .menu-container {
+                max-width: 240px;
+                gap: 32px;
+            }
+            
+            .menu-button {
+                font-size: 16px;
+                padding: 15px 8px;
+                min-height: 55px;
+            }
+            
+            .footer-logo {
+                bottom: 30px;
+                padding: 12px 20px;
+                min-width: 260px;
+            }
+            
+            .logo-korean {
+                font-size: 18px;
+            }
+            
+            .logo-english {
+                font-size: 10px;
+            }
+            
+            .school-icon {
+                font-size: 20px;
+            }
+        }
+
+        /* 아주 작은 화면 */
+        @media (max-width: 360px) {
+            .header {
+                padding: 25px 12px 10px;
+            }
+            
+            .app-icon {
+                width: 45px;
+                height: 45px;
+                margin-bottom: 4px;
+            }
+            
+            .icon-content {
+                font-size: 14px;
+            }
+            
+            .app-title {
+                font-size: 18px;
+            }
+            
+            .menu-button {
+                font-size: 15px;
+                padding: 14px 6px;
+                min-height: 50px;
+                gap: 8px;
+            }
+            
+            .main-content {
+                padding: 12px;
+            }
+            
+            .footer-logo {
+                min-width: 240px;
+                padding: 10px 18px;
+            }
+        }
+
+        /* 가로 모드 - 높이 최적화 */
+        @media (orientation: landscape) and (max-height: 500px) {
+            .app-container {
+                min-height: 100vh;
+            }
+            
+            .header {
+                padding: 20px 20px 10px;
+            }
+            
+            .main-content {
+                padding: 10px 20px;
+            }
+            
+            .menu-container {
+                gap: 10px;
+            }
+            
+            .menu-button {
+                padding: 12px 16px;
+                min-height: 45px;
+                font-size: 15px;
+            }
+            
+            .footer-logo {
+                bottom: 10px;
+                padding: 8px;
+            }
+            
+            .logo-korean {
+                font-size: 13px;
+            }
+            
+            .logo-english {
+                font-size: 7px;
+            }
+        }
+
+        /* 매우 작은 높이 */
+        @media (max-height: 400px) {
+            .header {
+                padding: 15px 15px 8px;
+            }
+            
+            .app-icon {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 5px;
+            }
+            
+            .app-title {
+                font-size: 16px;
+                margin-bottom: 2px;
+            }
+            
+            .app-subtitle {
+                font-size: 11px;
+            }
+            
+            .main-content {
+                padding: 8px 15px;
+            }
+            
+            .menu-container {
+                gap: 8px;
+            }
+            
+            .menu-button {
+                padding: 10px 14px;
+                min-height: 40px;
+                font-size: 14px;
+            }
+            
+            .footer-logo {
+                bottom: 8px;
+                padding: 6px;
+            }
+        }
+
+        /* 터치 디바이스에서 버튼 크기 조정 */
+        @media (pointer: coarse) {
+            .menu-button {
+                min-height: 60px;
+            }
+        }
+    
+        @media (max-width: 420px) {
+            .main-content { padding-top: 120px; }
+        }
+
+    
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 15px 15px 140px;
+                padding-top: clamp(120px, 22vh, 170px);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="app-icon">
+                <div class="icon-content">예약</div>
+            </div>
+            <div class="app-title">화천초등학교</div>
+            <div class="app-subtitle">특별실 예약시스템</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="menu-container">
+                <button class="menu-button primary" onclick="openSaengGakNaNoomTeo()">
+                    🧠 생각나눔터 예약하기
+                </button>
+                
+                <button class="menu-button secondary" onclick="openComputerRoom()">
+                    💻 컴퓨터실 예약하기
+                </button>
+            </div>
+
+            <!-- Footer Logo -->
+            <div class="footer-logo">
+                <div class="logo-text" style="display: flex; align-items: center; gap: 8px;"><img src="data:image/png;base64,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" alt="학교 로고" style="height: 60px; width: auto;"><div style="display: flex; flex-direction: column; align-items: center;">
+                    <div class="logo-korean">화천초등학교</div>
+                        <div class="logo-english">HWACHEON ELEMENTARY SCHOOL</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openSaengGakNaNoomTeo() {
+            // 생각나눔터 예약 URL
+            const bookingUrl = 'https://outlook.office.com/book/Bookings@gwhw.gwe.es.kr/s/55aQYJW11kCSzNWPrsreBA2?ismsaljsauthenabled';
+            window.open(bookingUrl, '_blank', 'noopener,noreferrer');
+        }
+
+        function openComputerRoom() {
+            // 컴퓨터실 예약 URL
+            const bookingUrl = 'https://outlook.office.com/book/Bookings@gwhw.gwe.es.kr/s/awgJB-JR_0SYDJIX3kr6sw2?ismsaljsauthenabled';
+            window.open(bookingUrl, '_blank', 'noopener,noreferrer');
+        }
+
+        // PWA 설치 기능
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // 설치 버튼 표시
+            const installButton = document.createElement('button');
+            installButton.innerHTML = '📱 앱 설치하기';
+            installButton.className = 'menu-button primary';
+            installButton.style.marginTop = '20px';
+            installButton.style.background = 'linear-gradient(135deg, #6c757d 0%, #495057 100%)';
+            installButton.style.fontSize = '16px';
+            
+            installButton.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    deferredPrompt = null;
+                    installButton.remove();
+                }
+            });
+            
+            document.querySelector('.menu-container').appendChild(installButton);
+        });
+
+        // 서비스 워커 등록
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                const swCode = `
+                    self.addEventListener('fetch', event => {
+                        event.respondWith(fetch(event.request));
+                    });
+                `;
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                const swUrl = URL.createObjectURL(blob);
+                
+                navigator.serviceWorker.register(swUrl);
+            });
+        }
+    </script>
+</body>
+</html>
